@@ -1,6 +1,6 @@
 {
-  "name": "oas3-tools",
-  "version": "2.2.0",
+  "name": "@naturacosmeticos/oas3-tools",
+  "version": "1.0.0",
   "description": "Swagger-UI and API Rest Routing for Open API v3.",
   "main": "dist/index.js",
   "scripts": {
@@ -14,11 +14,11 @@
   "bugs": {
     "url": "https://github.com/bug-hunters/oas3-tools/issues"
   },
-  "homepage": "https://github.com/bug-hunters/oas3-tools",
+  "homepage": "https://github.com/natura-cosmeticos/oas3-tools",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bug-hunters/oas3-tools.git"
+    "url": "git@github.com:natura-cosmeticos/oas3-tools.git"
   },
   "keywords": [
     "api",
