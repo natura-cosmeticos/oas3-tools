@@ -49,7 +49,7 @@ export class ExpressAppConfig {
         this.app.use(OpenApiValidator.middleware(this.openApiValidatorOptions));
         this.app.use(new SwaggerParameters().checkParameters());
         // Bind custom middlewares which need access to the OpenApiRequest context before controllers initialization
-        (customMiddlewares || []).forEach(middleware => this.app.use(middleware))
+        (customMiddlewares || []).forEach(middleware => this.app.use(...middleware))
         this.app.use(new SwaggerRouter().initialize(this.routingOptions));
 
         this.app.use(this.errorHandler);
