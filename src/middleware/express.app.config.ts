@@ -2,7 +2,6 @@
 
 import * as express from 'express';
 import cookieParser = require('cookie-parser');
-import bodyParser = require('body-parser');
 import cors = require('cors');
 import { SwaggerUI } from './swagger.ui';
 import { SwaggerRouter } from './swagger.router';
@@ -25,22 +24,20 @@ export class ExpressAppConfig {
         this.routingOptions = appOptions.routing;
         this.setOpenApiValidatorOptions(definitionPath, appOptions);
 
-				// Create new express app only if not passed by options
+        // Create new express app only if not passed by options
         this.app = appOptions.app || express();
 
-    		this.app.use(cors(appOptions.cors));
-        
+        this.app.use(cors(appOptions.cors));
+
         const spec = fs.readFileSync(definitionPath, 'utf8');
         const swaggerDoc = jsyaml.safeLoad(spec);
 
-        this.app.use(bodyParser.urlencoded());
-        this.app.use(bodyParser.text());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.raw({ type: 'application/pdf' }));
+        this.app.use(express.urlencoded({ limit: '50mb', extended: true }));
+        this.app.use(express.text({ limit: '50mb' }));
+        this.app.use(express.json({ limit: '50mb' }));
+        this.app.use(express.raw({ limit: '50mb', type: 'application/pdf' }));
 
         this.app.use(this.configureLogger(appOptions.logging));
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: false }));
         this.app.use(cookieParser());
 
         const swaggerUi = new SwaggerUI(swaggerDoc, appOptions.swaggerUI);
@@ -71,16 +68,16 @@ export class ExpressAppConfig {
 
     public configureLogger(loggerOptions) {
         let format = 'dev';
-        let options:{} = {};
+        let options: {} = {};
 
         if (loggerOptions != undefined) {
-            if(loggerOptions.format != undefined
-                && typeof loggerOptions.format === 'string'){
-                    format = loggerOptions.format;
+            if (loggerOptions.format != undefined
+                && typeof loggerOptions.format === 'string') {
+                format = loggerOptions.format;
             }
-    
-            if(loggerOptions.errorLimit != undefined
-                && (typeof loggerOptions.errorLimit === 'string' || typeof loggerOptions.errorLimit === 'number')){
+
+            if (loggerOptions.errorLimit != undefined
+                && (typeof loggerOptions.errorLimit === 'string' || typeof loggerOptions.errorLimit === 'number')) {
                 options['skip'] = function (req, res) { return res.statusCode < parseInt(loggerOptions.errorLimit); };
             }
         }
