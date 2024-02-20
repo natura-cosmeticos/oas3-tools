@@ -36,7 +36,7 @@ export class SwaggerRouter {
 
           if (isPlainObject(controller)) {
             each(controller, function (value, name) {
-              let handlerId = controllerName + '_' + name;
+              let handlerId = (controllerName + '_' + name).toLowerCase();
 
               debug('      %s%s',
                   handlerId,
@@ -87,7 +87,7 @@ export class SwaggerRouter {
       if (req.openapi.schema['x-swagger-router-controller']) {
         let operationId = req.openapi.schema.operationId ? req.openapi.schema.operationId : req.method.toLowerCase();
         operationId = removeDashElementToCamelCase(operationId);
-        return req.openapi.schema['x-swagger-router-controller'] + '_' + operationId;
+        return (req.openapi.schema['x-swagger-router-controller'] + '_' + operationId).toLocaleLowerCase();
       } else {
         return removeDashElementToCamelCase(req.openapi.schema.operationId);
       }
@@ -105,6 +105,10 @@ export class SwaggerRouter {
       let handlerName;
       let rErr;
 
+      if (isUndefined(req.openapi)) {
+        return next(rErr);
+      }
+      
       debug('%s %s', req.method, req.url);
       debug('  Will process: %s', isUndefined(operation) ? 'no' : 'yes');
 

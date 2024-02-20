@@ -3,9 +3,10 @@
 import { defaults } from 'lodash';
 import * as fs from 'fs';
 import * as parseurl from 'parseurl';
-import * as path  from 'path';
+import * as path from 'path';
 import * as serveStatic from 'serve-static';
 import { SwaggerUiOptions } from './swagger.ui.options';
+import { getAbsoluteFSPath } from 'swagger-ui-dist';
 
 import Debug from "debug";
 const debug = Debug("oas3-tools:ui");
@@ -97,6 +98,6 @@ export class SwaggerUI {
   }
 
   private getDefaultOptions(): SwaggerUiOptions {
-    return new SwaggerUiOptions('/api-docs', '/docs', undefined);
+    return new SwaggerUiOptions('/api-docs', '/docs', getAbsoluteFSPath());
   }
 }

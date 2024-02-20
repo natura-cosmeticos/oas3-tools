@@ -12,11 +12,11 @@ export class SwaggerUiOptions {
     }
 
     private sanitize() {
-        if (this.apiDocsPath.charAt(this.apiDocsPath.length -1) === '/') {
+        if (this.apiDocsPath.charAt(this.apiDocsPath.length - 1) === '/') {
             this.apiDocsPath = this.apiDocsPath.substring(0, this.apiDocsPath.length - 1);
         }
 
-        if (this.swaggerUIPath.charAt(this.swaggerUIPath.length -1) === '/') {
+        if (this.swaggerUIPath.charAt(this.swaggerUIPath.length - 1) === '/') {
             this.swaggerUIPath = this.swaggerUIPath.substring(0, this.swaggerUIPath.length - 1);
         }
     }
